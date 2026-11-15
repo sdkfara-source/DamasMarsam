@@ -1,0 +1,115 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card mb-3">
+      <div class="card-header"><i class="fa-solid fa-circle-info"></i> {{ text_extension }}</div>
+      <div class="card-body">
+        <p class="mb-2">{{ text_help_layout }}</p>
+        <p class="mb-0">{{ text_help_affiliate }}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3 required">
+            <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+              <div id="error-name" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-title" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-text" class="col-sm-2 col-form-label">{{ entry_text }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="text" value="{{ text }}" placeholder="{{ entry_text }}" id="input-text" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-affiliate-code" class="col-sm-2 col-form-label">{{ entry_affiliate_code }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="affiliate_code" value="{{ affiliate_code }}" placeholder="DDS-AFF-1001" id="input-affiliate-code" class="form-control"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_show_affiliate }}</label>
+            <div class="col-sm-10">
+              <select name="show_affiliate" id="input-show-affiliate" class="form-select">
+                <option value="1"{% if show_affiliate %} selected{% endif %}>{{ text_yes }}</option>
+                <option value="0"{% if not show_affiliate %} selected{% endif %}>{{ text_no }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_show_watermark }}</label>
+            <div class="col-sm-10">
+              <select name="show_watermark" id="input-show-watermark" class="form-select">
+                <option value="1"{% if show_watermark %} selected{% endif %}>{{ text_yes }}</option>
+                <option value="0"{% if not show_watermark %} selected{% endif %}>{{ text_no }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_networks }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_whatsapp" value="1" id="input-network-whatsapp" class="form-check-input"{% if network_whatsapp %} checked{% endif %}/>
+                <label for="input-network-whatsapp" class="form-check-label">WhatsApp</label>
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_telegram" value="1" id="input-network-telegram" class="form-check-input"{% if network_telegram %} checked{% endif %}/>
+                <label for="input-network-telegram" class="form-check-label">Telegram</label>
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_facebook" value="1" id="input-network-facebook" class="form-check-input"{% if network_facebook %} checked{% endif %}/>
+                <label for="input-network-facebook" class="form-check-label">Facebook</label>
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_x" value="1" id="input-network-x" class="form-check-input"{% if network_x %} checked{% endif %}/>
+                <label for="input-network-x" class="form-check-label">X (Twitter)</label>
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_linkedin" value="1" id="input-network-linkedin" class="form-check-input"{% if network_linkedin %} checked{% endif %}/>
+                <label for="input-network-linkedin" class="form-check-label">LinkedIn</label>
+              </div>
+              <div class="form-check form-switch">
+                <input type="checkbox" name="network_email" value="1" id="input-network-email" class="form-check-input"{% if network_email %} checked{% endif %}/>
+                <label for="input-network-email" class="form-check-label">E-mail</label>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="status" value="0"/>
+                <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="module_id" value="{{ module_id }}" id="input-module-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

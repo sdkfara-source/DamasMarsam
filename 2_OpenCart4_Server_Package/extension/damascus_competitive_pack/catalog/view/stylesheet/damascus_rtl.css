@@ -1,0 +1,68 @@
+/* ---------------------------------------------------------------------------
+   Damascus Competitive Pack - storefront styles
+   Share card, protected-preview watermark and RTL typography.
+   --------------------------------------------------------------------------- */
+
+html[dir="rtl"] body {
+    font-family: 'Cairo', 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+    text-align: right;
+}
+
+.dds-share {
+    border-color: #0d6efd;
+}
+
+.dds-share__heading {
+    font-weight: 700;
+}
+
+.dds-share__preview {
+    position: relative;
+    overflow: hidden;
+    border-radius: .375rem;
+}
+
+.dds-share__preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.dds-share__stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-20deg);
+    background: rgba(16, 42, 67, .72);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Protected preview applied to catalogue thumbnails and the main product
+   image while the module's "Show Preview Watermark" setting is enabled. */
+html.dds-preview-watermark .product-thumb .image,
+html.dds-preview-watermark #product-info .image {
+    position: relative;
+    overflow: hidden;
+}
+
+html.dds-preview-watermark .product-thumb .image::after,
+html.dds-preview-watermark #product-info .image::after {
+    content: "PREVIEW";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    background: rgba(16, 42, 67, .55);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    pointer-events: none;
+}
