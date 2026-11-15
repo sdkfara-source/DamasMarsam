@@ -11,7 +11,7 @@
   // ---------- localStorage persistence ----------
 
   // Key for storing state in localStorage
-  var STORAGE_KEY = "dds_store_state_v2";
+  var STORAGE_KEY = "dds_store_v2";
 
   function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -478,58 +478,16 @@ ensureApiIndicatorStyles();
   }
 
   function openCartDrawer() {
-    var backdrop = byId("drawer-backdrop");
-    var panel = byId("cart-drawer");
-    var body = document.body;
-
-    if (!backdrop || !panel) return;
-
-    // Ensure all overlays are closed first (clean state)
-    closeAllOverlays();
-
-    // Show backdrop with proper styling
-    backdrop.classList.add("open");
-    backdrop.setAttribute("aria-hidden", "false");
-
-    // Show panel with proper styling
-    panel.classList.add("open");
-    panel.setAttribute("aria-hidden", "false");
-    panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-modal", "true");
-
-    // Lock body overflow to prevent scrolling when drawer is open
-    // Save current padding in case body had none previously
-    if (body.style.paddingRight === "") {
-        body.style.paddingRight = "17px"; // Prevent scrollbar jump
-    }
-    body.style.overflow = "hidden";
+    byId("drawer-backdrop").classList.add("open");
+    byId("cart-drawer").classList.add("open");
   }
 
   function closeAllOverlays() {
-    var b = byId("drawer-backdrop"), c = byId("cart-drawer"), m = byId("product-modal"), p = byId("paypal-modal"), body = document.body;
-    if (b) {
-        b.classList.remove("open");
-        b.setAttribute("aria-hidden", "true");
-    }
-    if (c) {
-        c.classList.remove("open");
-        c.setAttribute("aria-hidden", "true");
-        c.removeAttribute("role");
-        c.removeAttribute("aria-modal");
-    }
-    if (m) {
-        m.classList.remove("open");
-        m.setAttribute("aria-hidden", "true");
-    }
-    if (p) {
-        p.classList.remove("open");
-        p.classList.add("hidden");
-    }
-
-    // RESTORE body overflow - THIS FIXES THE GREY-PAUSE ISSUE
-    // This ensures the body is not left with overflow:hidden after closing modals/drawers
-    body.style.overflow = '';
-    body.style.paddingRight = '';
+    var b = byId("drawer-backdrop"), c = byId("cart-drawer"), m = byId("product-modal"), p = byId("paypal-modal");
+    if (b) b.classList.remove("open");
+    if (c) c.classList.remove("open");
+    if (m) m.classList.remove("open");
+    if (p) { p.classList.remove("open"); p.classList.add("hidden"); }
   }
 
   // ---------- product modal ----------
