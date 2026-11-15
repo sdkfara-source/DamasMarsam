@@ -8,10 +8,35 @@
 (function () {
   "use strict";
 
-  // ---------- persistence & bootstrap ----------
+  // ---------- localStorage persistence ----------
+
+  // Key for storing state in localStorage
+  var STORAGE_KEY = "dds_store_state_v2";
 
   function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
+  }
+
+  // Load state from localStorage on page load
+  function loadStoreState() {
+    try {
+      var stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (e) {
+      console.warn("Failed to load store state from localStorage", e);
+    }
+    return null;
+  }
+
+  // Save state to localStorage
+  function saveStoreState(stateObj) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+    } catch (e) {
+      console.warn("Failed to save store state to localStorage", e);
+    }
   }
 
   function createFreshState() {
@@ -57,7 +82,6 @@
   };
 
   function persist() {
-    if (typeof saveStoreState !== "function") return;
     saveStoreState({
       orders: state.orders,
       downloadCounts: state.downloadCounts,
@@ -385,6 +409,7 @@ ensureApiIndicatorStyles();
     if (state.cart.indexOf(id) === -1) state.cart.push(id);
     updateCartUI();
     openCartDrawer();
+    persist(); // Save cart to localStorage
     var prod = PRODUCTS.find(function (p) { return p.id === id; });
     if (prod) announce(state.lang === "ar" ? "تمت إضافة " + prod.titleAr + " إلى السلة" : "Added " + prod.titleEn + " to cart");
   }
@@ -394,6 +419,7 @@ ensureApiIndicatorStyles();
     state.cart = state.cart.filter(function (x) { return x !== id; });
     if (state.cart.length === 0) state.couponApplied = false;
     updateCartUI();
+    persist(); // Save cart changes to localStorage
   }
 
   function getCartTotals() {
