@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar-SY" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مرسم دمشق الرقمي | Damascus Digital Studio — متجر المنتجات الرقمية والهندسية</title>
+  <meta name="description" content="متجر إلكتروني متخصص ببيع بطاقات المعايدة الرقمية، اللوحات الفنية عالية الدقة، والمخططات الهندسية AutoCAD و Revit للسوق السورية والعالمية مع تحميل فوري مشفر ودفع عبر PayPal." />
+  <meta name="keywords" content="مرسم دمشق الرقمي, بطاقات معايدة رقمية, مخططات AutoCAD, لوحات فنية رقمية, OpenCart 4, سوريا, PayPal" />
+  <!-- OpenGraph / Social Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Damascus Digital Studio — مرسم دمشق الرقمي" />
+  <meta property="og:title" content="مرسم دمشق الرقمي | متجر البطاقات واللوحات والحلول الهندسية القابلة للتحميل" />
+  <meta property="og:description" content="تحميل فوري مشفر لملفات CAD وبطاقات المعايدة 4K واللوحات الفنية مع دعم الليرة السورية SYP والدولار USD وبوابة PayPal." />
+
+  <!-- Google Fonts: Cairo (Arabic) & Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/storefront.css" />
+
+  <!-- JSON-LD Structured Data (Schema.org Store + Digital Products) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "مرسم دمشق الرقمي — Damascus Digital Studio",
+    "url": "https://damascus-digital.infinityfreeapp.com/",
+    "description": "Digital storefront for downloadable greeting cards, fine vector illustrations, and AutoCAD/Revit engineering plans serving Syria and global clients.",
+    "currenciesAccepted": "USD, SYP",
+    "paymentAccepted": "PayPal, Bank Transfer",
+    "areaServed": ["SY", "Worldwide"]
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link" data-ar="تخطي إلى المحتوى الرئيسي" data-en="Skip to main content">تخطي إلى المحتوى الرئيسي</a>
+  <div id="aria-announcer" class="sr-only" aria-live="polite" style="position:absolute;left:-9999px;"></div>
+
+  <!-- Top Utility Bar: Localization (AR/EN) & Dual Currency (USD/SYP) -->
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <div>
+        <span class="utility-badge">OpenCart 4.0.2.3</span>
+        <span data-ar="خصم 20% للمتسوقين النشطاء عبر الكود: DAMASCUS20" data-en="20% Off for Active Shoppers with Code: DAMASCUS20">خصم 20% للمتسوقين النشطاء عبر الكود: DAMASCUS20</span>
+      </div>
+      <div class="utility-controls">
+        <button type="button" id="curr-toggle-btn" class="pill-switch" aria-label="Switch currency">USD ($) ⇄ SYP (ل.س)</button>
+        <button type="button" id="lang-toggle-btn" class="pill-switch" aria-label="Switch language">English (EN)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" onclick="switchView('home');return false;">
+        <span class="brand-mark" aria-hidden="true">DDS</span>
+        <span>
+          <span class="brand-title" data-ar="مرسم دمشق الرقمي" data-en="Damascus Digital Studio">مرسم دمشق الرقمي</span>
+          <span class="brand-sub" data-ar="بطاقات • لوحات فنية • حلول هندسية CAD" data-en="Greeting Cards • Fine Art • Engineering CAD">بطاقات • لوحات فنية • حلول هندسية CAD</span>
+        </span>
+      </a>
+
+      <button type="button" id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Menu">☰</button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary Navigation">
+        <button type="button" class="nav-btn" data-nav="home" aria-current="page" data-ar="المتجر الرقمي" data-en="Digital Store">المتجر الرقمي</button>
+        <button type="button" class="nav-btn" data-nav="downloads" data-ar="تنزيلاتي (الطلبات)" data-en="My Downloads">تنزيلاتي (الطلبات)</button>
+        <button type="button" class="nav-btn" data-nav="affiliate" data-ar="برنامج الحلفاء (10%)" data-en="Affiliate Program">برنامج الحلفاء (10%)</button>
+        <button type="button" class="nav-btn" data-nav="admin" data-ar="لوحة الإدارة والتقارير" data-en="Admin & Reports">لوحة الإدارة والتقارير</button>
+        <button type="button" class="nav-btn" data-nav="support" data-ar="خدمة العملاء" data-en="Customer Service">خدمة العملاء</button>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" id="cart-open-btn" class="cart-trigger">
+          <span data-ar="السلة" data-en="Cart">السلة</span>
+          <span id="cart-count" class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- VIEW 1: STOREFRONT HOME & CATALOG -->
+    <div class="view-section" data-view="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="hero-kicker" data-ar="تسليم رقمي مشفر • بدون شحن مادي • دعم السوق السورية والعالمية" data-en="Encrypted Digital Delivery • Zero Shipping • Syria & Global Markets">تسليم رقمي مشفر • بدون شحن مادي • دعم السوق السورية والعالمية</span>
+            <h1 data-ar="إبداعات دمشقية وحلول هندسية جاهزة للتحميل الفوري" data-en="Damascene Creative Assets & Engineering CAD Plans Ready for Instant Download">إبداعات دمشقية وحلول هندسية جاهزة للتحميل الفوري</h1>
+            <p data-ar="منصة تجارة إلكترونية متكاملة مبنية على OpenCart 4.0.2.3 لبيع بطاقات المعايدة 4K، اللوحات الفنية، ومخططات AutoCAD و Revit مع تسعير مزدوج (USD / SYP) وبوابة PayPal." data-en="Complete OpenCart 4.0.2.3 digital commerce platform offering 4K greeting cards, fine vector art, and AutoCAD/Revit engineering plans with dual USD/SYP pricing and PayPal checkout.">منصة تجارة إلكترونية متكاملة مبنية على OpenCart 4.0.2.3 لبيع بطاقات المعايدة 4K، اللوحات الفنية، ومخططات AutoCAD و Revit مع تسعير مزدوج (USD / SYP) وبوابة PayPal.</p>
+            <div class="hero-ctas">
+              <a href="#catalog-section" class="btn btn-primary" data-ar="تصفح المنتجات الرقمية" data-en="Explore Digital Catalog">تصفح المنتجات الرقمية</a>
+              <button type="button" class="btn btn-outline-light" onclick="switchView('affiliate')" data-ar="انضم لبرنامج الحلفاء (10%)" data-en="Join Affiliate Program (10%)">انضم لبرنامج الحلفاء (10%)</button>
+            </div>
+          </div>
+          <aside class="hero-card" aria-label="Platform Specifications">
+            <h2 style="margin:0 0 12px;font-size:16px;color:#FCD34D;" data-ar="مواصفات البنية البرمجية المعتمدة" data-en="Deployed Architecture Specs">مواصفات البنية البرمجية المعتمدة</h2>
+            <ul class="hero-stat-list">
+              <li class="hero-stat-item"><span data-ar="النواة البرمجية" data-en="Core Engine">النواة البرمجية</span><strong>OpenCart 4.0.2.3</strong></li>
+              <li class="hero-stat-item"><span data-ar="العملات المدعومة" data-en="Currencies">العملات المدعومة</span><strong>USD ($) + SYP (ل.س)</strong></li>
+              <li class="hero-stat-item"><span data-ar="بوابات الدفع" data-en="Payment Gateways">بوابات الدفع</span><strong>PayPal + Bank Transfer</strong></li>
+              <li class="hero-stat-item"><span data-ar="حماية الملفات" data-en="Asset Protection">حماية الملفات</span><strong>Hash Storage + Watermark</strong></li>
+              <li class="hero-stat-item"><span data-ar="الاستضافة المنفصلة" data-en="Cloud Hosting">الاستضافة المنفصلة</span><strong>InfinityFree SSL</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Trust & Value Strip -->
+      <section class="trust-strip" aria-label="Key Store Advantages">
+        <div class="container trust-grid">
+          <div class="trust-item">
+            <span class="trust-icon">⚡</span>
+            <div>
+              <h2 data-ar="تحميل فوري بعد الدفع" data-en="Instant Post-Payment Unlock">تحميل فوري بعد الدفع</h2>
+              <p data-ar="تفعيل تلقائي لرابط التنزيل فور تأكيد PayPal Webhook" data-en="Automated download unlock via PayPal IPN/Webhook">تفعيل تلقائي لرابط التنزيل فور تأكيد PayPal Webhook</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">🛡️</span>
+            <div>
+              <h2 data-ar="علامة مائية وتشفير مسارات" data-en="Watermarked Previews & Hash Paths">علامة مائية وتشفير مسارات</h2>
+              <p data-ar="حماية الملكية الفكرية للمصممين والمهندسين" data-en="Intellectual property protection before purchase">حماية الملكية الفكرية للمصممين والمهندسين</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">💱</span>
+            <div>
+              <h2 data-ar="سوق سورية وعالمية" data-en="Syrian & Global Localization">سوق سورية وعالمية</h2>
+              <p data-ar="واجهة RTL عربية/إنجليزية وتسعير بالليرة والدولار" data-en="Bilingual RTL/LTR interface with SYP & USD rates">واجهة RTL عربية/إنجليزية وتسعير بالليرة والدولار</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">🤝</span>
+            <div>
+              <h2 data-ar="تسويق بالعمولة 10%" data-en="10% Affiliate Marketing">تسويق بالعمولة 10%</h2>
+              <p data-ar="روابط تتبع مخصصة ومشاركة اجتماعية بنقرة واحدة" data-en="Custom referral links & one-click social sharing">روابط تتبع مخصصة ومشاركة اجتماعية بنقرة واحدة</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filterable Digital Catalog -->
+      <section id="catalog-section" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 data-ar="دليل المنتجات الرقمية القابلة للتحميل" data-en="Downloadable Digital Products Catalog">دليل المنتجات الرقمية القابلة للتحميل</h2>
+              <p data-ar="جميع المنتجات مضبوطة على (Requires Shipping = No) وتُسلم إلكترونياً بصيغ أصلية عالية الدقة." data-en="All items configured with (Requires Shipping = No) for instant encrypted digital fulfillment.">جميع المنتجات مضبوطة على (Requires Shipping = No) وتُسلم إلكترونياً بصيغ أصلية عالية الدقة.</p>
+            </div>
+          </div>
+
+          <div class="catalog-controls">
+            <div class="filter-tabs" role="group" aria-label="Category Filters">
+              <button type="button" class="filter-tab" data-cat="all" aria-pressed="true" data-ar="الكل (6)" data-en="All (6)">الكل (6)</button>
+              <button type="button" class="filter-tab" data-cat="cards" aria-pressed="false" data-ar="بطاقات معايدة" data-en="Greeting Cards">بطاقات معايدة</button>
+              <button type="button" class="filter-tab" data-cat="art" aria-pressed="false" data-ar="لوحات فنية" data-en="Digital Art">لوحات فنية</button>
+              <button type="button" class="filter-tab" data-cat="cad" aria-pressed="false" data-ar="حلول هندسية CAD" data-en="Engineering CAD">حلول هندسية CAD</button>
+            </div>
+            <input type="search" id="catalog-search" class="search-input" data-placeholder-ar="ابحث بالاسم أو رمز المنتج..." data-placeholder-en="Search by title or SKU..." placeholder="ابحث بالاسم أو رمز المنتج..." aria-label="Search products" />
+          </div>
+
+          <div id="product-grid" class="product-grid"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 2: CUSTOMER DOWNLOADS VAULT -->
+    <div class="view-section hidden" data-view="downloads">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 data-ar="حسابي ⬅ التنزيلات الرقمية (My Account > Downloads)" data-en="My Account > Digital Downloads Vault">حسابي ⬅ التنزيلات الرقمية (My Account > Downloads)</h2>
+              <p data-ar="تُفعّل روابط التحميل المباشر للملفات الأصلية (SVG / DXF) تلقائياً فور تحول حالة الطلب إلى Complete." data-en="Direct master file downloads (SVG / DXF) unlock automatically once order status reaches Complete.">تُفعّل روابط التحميل المباشر للملفات الأصلية (SVG / DXF) تلقائياً فور تحول حالة الطلب إلى Complete.</p>
+            </div>
+            <button type="button" class="btn btn-navy btn-sm" onclick="switchView('home')" data-ar="متابعة التسوق" data-en="Back to Catalog">متابعة التسوق</button>
+          </div>
+          <div class="panel-card">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th data-ar="رقم الطلب" data-en="Order ID">رقم الطلب</th>
+                    <th data-ar="الزبون" data-en="Customer">الزبون</th>
+                    <th data-ar="المنتج الرقمي والملف" data-en="Digital Product & File">المنتج الرقمي والملف</th>
+                    <th data-ar="وسيلة الدفع" data-en="Payment Method">وسيلة الدفع</th>
+                    <th data-ar="حالة الطلب" data-en="Status">حالة الطلب</th>
+                    <th data-ar="التنزيلات المتبقية" data-en="Remaining">التنزيلات المتبقية</th>
+                    <th data-ar="الإجراء" data-en="Action">الإجراء</th>
+                  </tr>
+                </thead>
+                <tbody id="downloads-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 3: AFFILIATE MARKETING HUB -->
+    <div class="view-section hidden" data-view="affiliate">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 data-ar="نظام التسويق بالعمولة — برنامج الحلفاء (Affiliate Program)" data-en="Affiliate Marketing Program & Tracking Generator">نظام التسويق بالعمولة — برنامج الحلفاء (Affiliate Program)</h2>
+              <p data-ar="نسبة العمولة المعتمدة: 10% على كل عملية بيع مكتملة عبر رابط التتبع الخاص بالمسوق." data-en="Commission Rate: 10% on every completed order referred via partner tracking cookie.">نسبة العمولة المعتمدة: 10% على كل عملية بيع مكتملة عبر رابط التتبع الخاص بالمسوق.</p>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-box"><span class="kpi-label" data-ar="النقرات المحولة" data-en="Referred Clicks">النقرات المحولة</span><span id="aff-clicks" class="kpi-val">48</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="الطلبات المكتملة" data-en="Completed Orders">الطلبات المكتملة</span><span id="aff-orders" class="kpi-val">4</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="مبيعات الحليف" data-en="Referred Sales">مبيعات الحليف</span><span id="aff-sales" class="kpi-val">$165.00</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="العمولة المستحقة (10%)" data-en="Earned Commission (10%)">العمولة المستحقة (10%)</span><span id="aff-commission" class="kpi-val">$16.50</span></div>
+          </div>
+
+          <div class="panel-card">
+            <h3 style="margin-top:0;color:var(--color-primary);" data-ar="مولّد روابط التتبع الفورية (Marketing > Affiliate Tracking)" data-en="Instant Affiliate Link Generator (Marketing > Affiliate Tracking)">مولّد روابط التتبع الفورية (Marketing > Affiliate Tracking)</h3>
+            <div class="form-group">
+              <label for="affiliate-product-select" data-ar="اختر المنتج المراد تسويقه:" data-en="Select Product to Promote:">اختر المنتج المراد تسويقه:</label>
+              <select id="affiliate-product-select" class="form-control"></select>
+            </div>
+            <div class="form-group">
+              <label for="affiliate-generated-url"><span data-ar="رابط التتبع الخاص بالمسوق (رمز التتبع:" data-en="Partner Tracking URL (Tracking Code:">رابط التتبع الخاص بالمسوق (رمز التتبع:</span> <span data-aff-code style="font-family:var(--font-mono);"></span>):</label>
+              <div style="display:flex;gap:8px;">
+                <input type="text" id="affiliate-generated-url" class="form-control" readonly style="font-family:var(--font-mono);font-size:12px;" />
+                <button type="button" id="copy-affiliate-btn" class="btn btn-primary btn-sm" data-ar="نسخ الرابط" data-en="Copy Link">نسخ الرابط</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 4: ADMIN REPORTS & ORDER APPROVAL -->
+    <div class="view-section hidden" data-view="admin">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 data-ar="لوحة تقارير الإدارة وإدارة الطلبيات (OpenCart Admin Reports)" data-en="Store Admin Analytics & Order Management">لوحة تقارير الإدارة وإدارة الطلبيات (OpenCart Admin Reports)</h2>
+              <p data-ar="مؤشرات الأداء المحسوبة من حالة المتجر الحالية (زيارات، مصادر حركة، وطلبيات فعلية)." data-en="Performance metrics computed from the current store state (visits, traffic sources, and actual orders).">مؤشرات الأداء المحسوبة من حالة المتجر الحالية (زيارات، مصادر حركة، وطلبيات فعلية).</p>
+            </div>
+            <button type="button" id="demo-reset-btn" class="btn btn-outline btn-sm" data-ar="إعادة ضبط بيانات العرض" data-en="Reset demo data">إعادة ضبط بيانات العرض</button>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-box"><span class="kpi-label" data-ar="الزيارات" data-en="Visits">الزيارات</span><span id="adm-visitors" class="kpi-val">0</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="الطلبات المكتملة" data-en="Completed Orders">الطلبات المكتملة</span><span id="adm-orders" class="kpi-val">0</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="إجمالي المبيعات" data-en="Total Revenue">إجمالي المبيعات</span><span id="adm-revenue" class="kpi-val">$0.00</span></div>
+            <div class="kpi-box"><span class="kpi-label" data-ar="معدل التحويل" data-en="Conversion Rate">معدل التحويل</span><span id="adm-conv" class="kpi-val">0%</span></div>
+          </div>
+
+          <div class="panel-card">
+            <h3 style="margin-top:0;color:var(--color-primary);" data-ar="مصادر الزيارات (حقيقي)" data-en="Traffic Sources (live)">مصادر الزيارات (حقيقي)</h3>
+            <div id="adm-traffic" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:14px;"></div>
+          </div>
+
+          <div class="panel-card">
+            <h3 style="margin-top:0;color:var(--color-primary);" data-ar="سجل الطلبيات وتأكيد الحوالات البنكية (Sales > Orders)" data-en="Order Ledger & Bank Transfer Verification (Sales > Orders)">سجل الطلبيات وتأكيد الحوالات البنكية (Sales > Orders)</h3>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th data-ar="الطلب" data-en="Order">الطلب</th>
+                    <th data-ar="التاريخ" data-en="Date">التاريخ</th>
+                    <th data-ar="الزبون" data-en="Customer">الزبون</th>
+                    <th data-ar="طريقة الدفع" data-en="Payment">طريقة الدفع</th>
+                    <th data-ar="المبلغ" data-en="Total">المبلغ</th>
+                    <th data-ar="الحالة" data-en="Status">الحالة</th>
+                    <th data-ar="تحكم الإدارة" data-en="Admin Action">تحكم الإدارة</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-orders-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- VIEW 5: CUSTOMER SERVICE -->
+    <div class="view-section hidden" data-view="support">
+      <section class="section">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <h2 data-ar="خدمة العملاء والدعم" data-en="Customer Service & Support">خدمة العملاء والدعم</h2>
+              <p data-ar="أرسل تذكرة دعم بخصوص الطلبات أو التنزيلات أو الدفع. تُحفظ التذاكر محلياً ضمن بيانات العرض." data-en="Submit a support ticket about orders, downloads, or payments. Tickets are stored locally with the demo data.">أرسل تذكرة دعم بخصوص الطلبات أو التنزيلات أو الدفع. تُحفظ التذاكر محلياً ضمن بيانات العرض.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <form id="support-form">
+              <div class="form-group">
+                <label for="support-name" data-ar="الاسم:" data-en="Name:">الاسم:</label>
+                <input type="text" id="support-name" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="support-email" data-ar="البريد الإلكتروني:" data-en="Email:">البريد الإلكتروني:</label>
+                <input type="email" id="support-email" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="support-subject" data-ar="الموضوع:" data-en="Subject:">الموضوع:</label>
+                <input type="text" id="support-subject" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="support-message" data-ar="الرسالة:" data-en="Message:">الرسالة:</label>
+                <textarea id="support-message" class="form-control" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" data-ar="إرسال التذكرة" data-en="Submit Ticket">إرسال التذكرة</button>
+            </form>
+          </div>
+
+          <div class="panel-card">
+            <h3 style="margin-top:0;color:var(--color-primary);" data-ar="التذاكر المستلمة" data-en="Submitted Tickets">التذاكر المستلمة</h3>
+            <div id="support-tickets"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Cart & Checkout Slide-Over Drawer -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+  <aside id="cart-drawer" class="drawer-panel" aria-label="Shopping Cart and Checkout">
+    <div class="drawer-header">
+      <strong data-ar="سلة المشتريات الرقمية وإتمام الدفع" data-en="Digital Cart & Instant Checkout">سلة المشتريات الرقمية وإتمام الدفع</strong>
+      <button type="button" class="pill-switch" onclick="closeAllOverlays()" aria-label="Close">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div id="cart-items-container"></div>
+
+      <form id="checkout-form" class="hidden" style="margin-top:16px;">
+        <div class="form-group">
+          <label for="coupon-input" data-ar="قسيمة خصم المتسوقين النشطاء (جرّب: DAMASCUS20، حد أدنى 10$):" data-en="Active Shopper Coupon (Try: DAMASCUS20, min $10):">قسيمة خصم المتسوقين النشطاء (جرّب: DAMASCUS20، حد أدنى 10$):</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="coupon-input" class="form-control" placeholder="DAMASCUS20" />
+            <button type="button" id="coupon-apply-btn" class="btn btn-outline btn-sm" data-ar="تطبيق" data-en="Apply">تطبيق</button>
+          </div>
+          <small id="coupon-msg" style="display:block;margin-top:4px;"></small>
+        </div>
+
+        <div id="cart-summary-box" style="background:var(--color-surface-alt);padding:12px;border-radius:10px;margin-bottom:14px;"></div>
+
+        <div class="form-group">
+          <label for="checkout-name" data-ar="اسم الزبون الكامل:" data-en="Customer Full Name:">اسم الزبون الكامل:</label>
+          <input type="text" id="checkout-name" class="form-control" required value="سامر العلي - دمشق" />
+        </div>
+
+        <div class="form-group">
+          <label for="checkout-payment" data-ar="بوابة الدفع الإلكتروني المعتمدة:" data-en="Payment Gateway:">بوابة الدفع الإلكتروني المعتمدة:</label>
+          <select id="checkout-payment" class="form-control">
+            <option value="PayPal Sandbox">PayPal Express Checkout (Sandbox — تفعيل فوري)</option>
+            <option value="Syrian Bank Transfer">تحويل بنكي محلي سوريا (تأكيد يدوي Pending)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;" data-ar="تأكيد الدفع وتفعيل التحميل" data-en="Complete Payment & Unlock Files">تأكيد الدفع وتفعيل التحميل</button>
+      </form>
+    </div>
+  </aside>
+
+  <!-- Product Preview Modal -->
+  <div id="product-modal" class="modal-dialog" role="dialog" aria-modal="true" aria-label="Product Details"></div>
+  <!-- Simulated PayPal Sandbox Modal -->
+  <div id="paypal-modal" class="modal-dialog hidden" role="dialog" aria-modal="true" aria-label="PayPal Sandbox"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 data-ar="مرسم دمشق الرقمي — Damascus Digital Studio" data-en="Damascus Digital Studio">مرسم دمشق الرقمي — Damascus Digital Studio</h3>
+          <p style="font-size:13px;" data-ar="مشروع التجارة الإلكترونية (SVU-F25 CM) المبني على نظام OpenCart 4.0.2.3 لبيع السلع القابلة للتحميل في السوق السورية والعالمية." data-en="E-Commerce Capstone Project (SVU-F25 CM) powered by OpenCart 4.0.2.3 for downloadable digital goods in Syrian and global markets.">مشروع التجارة الإلكترونية (SVU-F25 CM) المبني على نظام OpenCart 4.0.2.3 لبيع السلع القابلة للتحميل في السوق السورية والعالمية.</p>
+        </div>
+        <div>
+          <h3 data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+          <ul style="list-style:none;padding:0;margin:0;font-size:13px;display:grid;gap:6px;">
+            <li><a href="#catalog" style="color:#CBD5E1;" onclick="switchView('home');return false;" data-ar="المنتجات الرقمية" data-en="Digital Products">المنتجات الرقمية</a></li>
+            <li><a href="#downloads" style="color:#CBD5E1;" onclick="switchView('downloads');return false;" data-ar="التنزيلات والطلبيات" data-en="Downloads & Orders">التنزيلات والطلبيات</a></li>
+            <li><a href="#affiliate" style="color:#CBD5E1;" onclick="switchView('affiliate');return false;" data-ar="برنامج الحلفاء" data-en="Affiliate Program">برنامج الحلفاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-ar="بيانات الاستضافة المخططة" data-en="Planned Hosting Details">بيانات الاستضافة المخططة</h3>
+          <p style="font-size:12px;font-family:var(--font-mono);margin:0;">
+            Host: InfinityFree Cloud (separate host)<br/>
+            Domain: damascus-digital.infinityfreeapp.com<br/>
+            Status: DNS resolves; site not deployed yet (domain not attached in hosting account).<br/>
+            Admin path (after deploy): /admin_dds/
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Damascus Digital Studio (SVU-F25 CM). All Rights Reserved.</span>
+        <span>OpenCart 4.0.2.3 • PayPal Sandbox • WCAG 2.1 AA</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/store-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
