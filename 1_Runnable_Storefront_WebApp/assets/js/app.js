@@ -88,7 +88,160 @@
 
   // ---------- attribution & telemetry ----------
 
-  function getPublicBase() {
+/**
+ * Initialize store state with backend API synchronization.
+ * Fetches cart, orders, affiliate, and traffic data from the OpenCart backend API.
+ * Falls back to localStorage seed data if backend is unavailable.
+ * @returns {Promise<void>} - Resolves after rendering all views
+ * @example
+ * await initializeStore(); // Called on DOMContentLoaded
+ */
+async function initializeStore() {
+    // API Base URL - can be overridden via <meta name="api-base" content="..."> in index.html
+    var apiBase = '';
+    var meta = document.querySelector('meta[name="api-base"]');
+    if (meta && meta.getAttribute('content')) {
+        apiBase = meta.getAttribute('content');
+    } else {
+        // Default: try relative API path, will fall back to localStorage
+        apiBase = 'index.php?route=api';
+    }
+
+    // Show demo mode indicator if API is used
+    var apiIndicator = byId('api-mode-indicator');
+    if (apiIndicator) {
+        apiIndicator.style.display = 'none';
+    }
+
+    // Try to fetch state from backend
+    try {
+        // Fetch cart state
+        var cartResponse = await fetch(apiBase + '&route=api/cart', {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+
+        if (cartResponse.ok) {
+            var cartData = await cartResponse.json();
+            // Merge backend cart with local state, preferring backend data
+            if (cartData && cartData.length !== undefined) {
+                state.cart = cartData;
+            }
+            updateCartUI();
+        }
+
+        // Fetch orders state
+        var ordersResponse = await fetch(apiBase + '&route=api/orders', {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+
+        if (ordersResponse.ok) {
+            var ordersData = await ordersResponse.json();
+            if (ordersData && ordersData.orders) {
+                state.orders = ordersData.orders;
+            }
+            if (ordersData && ordersData.downloadCounts) {
+                state.downloadCounts = ordersData.downloadCounts;
+            }
+        }
+
+        // Fetch affiliate state
+        var affiliateResponse = await fetch(apiBase + '&route=api/affiliate', {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+
+        if (affiliateResponse.ok) {
+            var affiliateData = await affiliateResponse.json();
+            if (affiliateData) {
+                state.affiliate = affiliateData;
+            }
+        }
+
+        // Fetch traffic/traversal state
+        var trafficResponse = await fetch(apiBase + '&route=api/traffic', {
+            method: 'GET',
+            credentials: 'same-origin'
+        });
+
+        if (trafficResponse.ok) {
+            var trafficData = await trafficResponse.json();
+            if (trafficData) {
+                state.traffic = trafficData;
+            }
+        }
+
+        // Success: backend state is active
+        if (apiIndicator) {
+            apiIndicator.textContent = 'Real Mode - Backend Synced';
+            apiIndicator.style.display = 'block';
+            apiIndicator.style.color = 'var(--color-success)';
+            apiIndicator.style.fontWeight = 'bold';
+            apiIndicator.style.marginLeft = '16px';
+        }
+
+    } catch (error) {
+        // API failure: graceful fallback to localStorage seed data
+        console.warn('Backend API unavailable - using localStorage fallback', error);
+
+        // Show offline indicator
+        var apiIndicator = byId('api-mode-indicator');
+        if (apiIndicator) {
+            apiIndicator.textContent = 'Offline Mode - localStorage';
+            apiIndicator.style.display = 'block';
+            apiIndicator.style.color = 'var(--color-warning)';
+            apiIndicator.style.fontWeight = 'bold';
+            apiIndicator.style.marginLeft = '16px';
+        }
+
+        // State remains from localStorage (already loaded in DEFAULT STATE section)
+        // Render from localStorage - no changes needed, state is already loaded
+    }
+}
+
+// Add API mode indicator to the storefront (after the header/brand area)
+(function () {
+    var indicator = document.createElement('div');
+    indicator.id = 'api-mode-indicator';
+    indicator.style = 'display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--color-surface);border-radius:8px;font-size:12px;margin-top:12px;min-height:20px;';
+    indicator.textContent = 'Initializing...';
+    // Insert after the brand/logo area - find the primary nav or utility bar
+    var utilityBar = document.querySelector('.utility-bar');
+    if (utilityBar) {
+        utilityBar.parentNode.insertBefore(indicator, utilityBar.nextSibling);
+    } else {
+        var grid = document.querySelector('.grid');
+        if (grid) {
+            var brand = grid.querySelector('[data-role="brand"]');
+            if (brand) {
+                grid.insertBefore(indicator, brand.nextSibling);
+            } else {
+                grid.insertBefore(indicator, grid.firstElementChild);
+            }
+        }
+    }
+})();
+
+// Ensure API indicator styles exist
+function ensureApiIndicatorStyles() {
+    var style = document.getElementById('api-indicator-styles');
+    if (!style) {
+        style = document.createElement('style');
+        style.id = 'api-indicator-styles';
+        style.textContent = `
+            #api-mode-indicator {
+                display: none;
+                margin-top: 4px;
+            }
+            .api-status-online { color: #2a7a2e; }
+            .api-status-offline { color: #bf5700; }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+ensureApiIndicatorStyles();
     if (typeof getPublicBaseUrl === "function") return getPublicBaseUrl();
     if (STORE_CONFIG.publicBaseUrl) return STORE_CONFIG.publicBaseUrl.replace(/\/$/, "");
     try {
@@ -299,16 +452,58 @@
   }
 
   function openCartDrawer() {
-    byId("drawer-backdrop").classList.add("open");
-    byId("cart-drawer").classList.add("open");
+    var backdrop = byId("drawer-backdrop");
+    var panel = byId("cart-drawer");
+    var body = document.body;
+
+    if (!backdrop || !panel) return;
+
+    // Ensure all overlays are closed first (clean state)
+    closeAllOverlays();
+
+    // Show backdrop with proper styling
+    backdrop.classList.add("open");
+    backdrop.setAttribute("aria-hidden", "false");
+
+    // Show panel with proper styling
+    panel.classList.add("open");
+    panel.setAttribute("aria-hidden", "false");
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+
+    // Lock body overflow to prevent scrolling when drawer is open
+    // Save current padding in case body had none previously
+    if (body.style.paddingRight === "") {
+        body.style.paddingRight = "17px"; // Prevent scrollbar jump
+    }
+    body.style.overflow = "hidden";
   }
 
   function closeAllOverlays() {
-    var b = byId("drawer-backdrop"), c = byId("cart-drawer"), m = byId("product-modal"), p = byId("paypal-modal");
-    if (b) b.classList.remove("open");
-    if (c) c.classList.remove("open");
-    if (m) m.classList.remove("open");
-    if (p) { p.classList.remove("open"); p.classList.add("hidden"); }
+    var b = byId("drawer-backdrop"), c = byId("cart-drawer"), m = byId("product-modal"), p = byId("paypal-modal"), body = document.body;
+    if (b) {
+        b.classList.remove("open");
+        b.setAttribute("aria-hidden", "true");
+    }
+    if (c) {
+        c.classList.remove("open");
+        c.setAttribute("aria-hidden", "true");
+        c.removeAttribute("role");
+        c.removeAttribute("aria-modal");
+    }
+    if (m) {
+        m.classList.remove("open");
+        m.setAttribute("aria-hidden", "true");
+    }
+    if (p) {
+        p.classList.remove("open");
+        p.classList.add("hidden");
+    }
+
+    // RESTORE body overflow - THIS FIXES THE GREY-PAUSE ISSUE
+    // This ensures the body is not left with overflow:hidden after closing modals/drawers
+    body.style.overflow = '';
+    body.style.paddingRight = '';
   }
 
   // ---------- product modal ----------
@@ -799,8 +994,17 @@
 
     var cartBtn = byId("cart-open-btn");
     if (cartBtn) cartBtn.addEventListener("click", openCartDrawer);
+    // Backdrop click - only close when clicking the backdrop itself, NOT drawer content
     var backdrop = byId("drawer-backdrop");
-    if (backdrop) backdrop.addEventListener("click", closeAllOverlays);
+    if (backdrop) {
+        backdrop.addEventListener("click", function (e) {
+            // Check if click target is the backdrop itself (not child elements like cart-drawer)
+            if (e.target === backdrop) {
+                closeAllOverlays();
+            }
+            // If click is on child elements (drawer content), do nothing - let the event stop
+        });
+    }
     var form = byId("checkout-form");
     if (form) form.addEventListener("submit", processCheckout);
     var affSelect = byId("affiliate-product-select");
@@ -858,7 +1062,11 @@
 
   // ---------- init ----------
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", async function () {
+    // Initialize store with backend sync (with localStorage fallback)
+    await initializeStore();
+
+    // Then run the rest of the initialization
     captureAttribution();
     bindEvents();
     setLanguage(state.lang);

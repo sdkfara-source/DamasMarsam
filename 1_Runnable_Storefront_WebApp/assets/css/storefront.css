@@ -838,7 +838,60 @@ html[dir="rtl"] .drawer-panel {
   display: none !important;
 }
 
-/* Responsive Breakpoints */
+/* ========== Overlay & Drawer State Fixes ========== */
+
+/* Body overflow control - prevented by JS when drawer/modal is open */
+body.overflow-hidden {
+    overflow: hidden;
+    padding-right: 17px; /* Prevent mobile scrollbar jump */
+}
+
+/* Ensure backdrop transitions smoothly */
+.drawer-backdrop {
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    will-change: opacity, visibility;
+}
+
+.drawer-backdrop.open {
+    opacity: 0.55;
+    visibility: visible;
+}
+
+/* Ensure panel transitions smoothly */
+.drawer-panel {
+    transition: transform var(--transition-base);
+    will-change: transform;
+}
+
+.drawer-panel.open {
+    transform: translateX(0) !important;
+}
+
+/* RTL panel direction */
+html[dir="rtl"] .drawer-panel.open {
+    transform: translateX(0) !important;
+}
+
+/* Prevent drawer content clicks from closing the drawer */
+.drawer-panel .cart-items,
+.drawer-panel .cart-summary,
+.drawer-panel .product-actions {
+    pointer-events: auto;
+}
+
+/* Modal overlay background */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    z-index: 200;
+    display: none;
+}
+.modal-backdrop.open {
+    display: block;
+}
+
+/* ========== Responsive Breakpoints */
 @media (max-width: 1023px) {
   .hero-grid {
     grid-template-columns: 1fr;
