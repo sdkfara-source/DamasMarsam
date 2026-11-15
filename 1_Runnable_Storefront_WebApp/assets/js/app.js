@@ -478,9 +478,54 @@ ensureApiIndicatorStyles();
   }
 
   function openCartDrawer() {
-    byId("drawer-backdrop").classList.add("open");
-    byId("cart-drawer").classList.add("open");
+    // Use querySelector for more reliable element finding
+    var backdrop = document.querySelector('#drawer-backdrop');
+    var drawer = document.querySelector('#cart-drawer');
+    
+    // Fallback to byId if querySelector fails
+    if (!backdrop || !drawer) {
+        backdrop = byId('drawer-backdrop');
+        drawer = byId('cart-drawer');
+    }
+    
+    if (!backdrop || !drawer) {
+        console.error('Cart drawer elements not found in DOM');
+        return;
+    }
+    
+    // Remove any existing 'open' classes first (clean state - prevents grey-pause)
+    backdrop.classList.remove('open');
+    drawer.classList.remove('open');
+    
+    // Add 'open' classes to show the drawer
+    backdrop.classList.add('open');
+    drawer.classList.add('open');
+    
+    // Focus the first focusable element in the drawer
+    var firstFocusable = drawer.querySelector('a, button, [tabindex]');
+    if (firstFocusable) {
+        firstFocusable.focus();
+    }
+    
+    console.log('✅ Cart drawer opened successfully');
   }
+
+  // BULLETPROOF: Force open cart drawer - callable from Chrome Console
+  window.forceOpenCartDrawer = function () {
+    var backdrop = document.querySelector('#drawer-backdrop') || document.getElementById('drawer-backdrop');
+    var drawer = document.querySelector('#cart-drawer') || document.getElementById('cart-drawer');
+    
+    if (backdrop && drawer) {
+        backdrop.classList.remove('open');
+        drawer.classList.remove('open');
+        backdrop.classList.add('open');
+        drawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        console.log('✅ Force cart drawer opened');
+    } else {
+        console.error('❌ Cart elements not found - backdrop:', backdrop, 'drawer:', drawer);
+    }
+  };
 
   function closeAllOverlays() {
     var b = byId("drawer-backdrop"), c = byId("cart-drawer"), m = byId("product-modal"), p = byId("paypal-modal");
